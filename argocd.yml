@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd          # Application 必须放在 argocd 命名空间
+spec:
+  project: default           # 所属 Argo CD Project
+  source:
+    repoURL: https://github.com/zxcfdcmv/cicd_dotfile.git
+    targetRevision: main     # 分支、Tag 或 Commit SHA
+    path: guestbook          # 仓库内路径
+  destination:
+    server: https://kubernetes.default.svc  # 目标集群，in-cluster 用这个
+    namespace: default       # 目标命名空间
+  syncPolicy:
+    automated:
+      prune: true            # Git 删除资源时，集群也同步删除
+      selfHeal: true         # 集群内资源被手动修改后，自动回滚到 Git 状态
+    syncOptions:
+      - CreateNamespace=true  # 自动创建目标命名空间
