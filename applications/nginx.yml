@@ -12,8 +12,8 @@ spec:
     targetRevision: main
     path: manifests/nginx
   destination:
-    namespace: https://kubernetes.default.svc
-    name: nginx
+    server: https://kubernetes.default.svc
+    namespace: nginx
   syncPolicy:
     automated:
       prune: true
