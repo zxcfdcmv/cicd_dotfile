@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default           # 所属 Argo CD Project
   source:
-    repoURL: https://github.com/zxcfdcmv/cicd_dotfile.git
+    repoURL: git@github.com:zxcfdcmv/cicd_dotfile.git
     targetRevision: main     # 分支、Tag 或 Commit SHA
     path: guestbook          # 仓库内路径
   destination:

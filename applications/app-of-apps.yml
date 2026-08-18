@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/zxcfdcmv/cicd_dotfile.git
+    repoURL: git@github.com:zxcfdcmv/cicd_dotfile.git
     targetRevision: main
     path: applications
   destination:
