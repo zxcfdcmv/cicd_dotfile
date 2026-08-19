@@ -15,7 +15,7 @@ spec:
       # 指定从外部 Helm 仓库拉取 Chart
       chart: harbor
       repoURL: https://helm.goharbor.io
-      targetRevision: 1.12.x
+      targetRevision: 1.12.0
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor
