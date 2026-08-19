@@ -6,12 +6,16 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://helm.goharbor.io  # 改用官方仓库
-    chart: kube-prometheus-stack          # Chart 名称
-    targetRevision: 88.2.0              # 指定版本
+    repoURL: git@github.com:zxcfdcmv/cicd_dotfile.git
+    targetRevision: main
+    path: charts/prometheus  # 存放 values.yaml 的目录
     helm:
       valueFiles:
-      - values.yaml                    # 引用 Git 中的 values
+      - values.yaml
+      # 指定从外部 Helm 仓库拉取 Chart
+      chart: kube-prometheus-stack
+      repoURL: https://helm.goharbor.io
+      targetRevision: 88.x
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
