@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.goharbor.io  # 改用官方仓库
+    chart: kube-prometheus-stack          # Chart 名称
+    targetRevision: 88.2.0              # 指定版本
+    helm:
+      valueFiles:
+      - values.yaml                    # 引用 Git 中的 values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
