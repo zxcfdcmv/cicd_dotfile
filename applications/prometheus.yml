@@ -12,10 +12,6 @@ spec:
     helm:
       valueFiles:
       - values.yaml
-      # 指定从外部 Helm 仓库拉取 Chart
-      chart: kube-prometheus-stack
-      repoURL: https://prometheus-community.github.io/helm-charts
-      targetRevision: 88.1.0
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
