@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: git@github.com:zxcfdcmv/cicd_dotfile.git
-    targetRevision: main
-    path: charts/harbor
+    repoURL: https://helm.goharbor.io  # 改用官方仓库
+    chart: harbor                       # Chart 名称
+    targetRevision: 1.12.x              # 指定版本
     helm:
       valueFiles:
-      - values.yaml
+      - values.yaml                    # 引用 Git 中的 values
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor
@@ -19,3 +19,5 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
