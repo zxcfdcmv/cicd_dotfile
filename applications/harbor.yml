@@ -1,0 +1,21 @@
+apiVersion: argocd.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:zxcfdcmv/cicd_dotfile.git
+    targetRevision: main
+    path: charts/harbor
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
