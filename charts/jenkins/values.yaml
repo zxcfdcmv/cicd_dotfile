@@ -1,0 +1,28 @@
+jenkins:
+  persistence:
+    enabled: false
+
+  # 核心：禁止启动时联网安装任何额外插件，这是省资源的核心
+  controller:
+    installPlugins: []
+
+    # 为了更轻，可以只分配最小资源（如果不设置，Helm会默认给一个保守值）
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "500m"
+      limits:
+        memory: "512Mi"
+        cpu: "500m"
+
+    # 可选：如果你不希望用默认的Latest镜像，可以指定一个稳定的LTS版本
+    # image: "jenkins/jenkins"
+    # tag: "lts"
+
+  # 如果在本地Minikube或Kind学习，可以不用Ingress
+  ingress:
+    enabled: false
+
+  # 禁用Agent相关功能（学习阶段暂时用不到）
+  agent:
+    enabled: false
