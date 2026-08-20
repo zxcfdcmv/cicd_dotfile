@@ -2,16 +2,19 @@ loki:
   deploymentMode: SingleBinary
 
   auth_enabled: false
+
   commonConfig:
     replication_factor: 1
+
   storage:
     type: filesystem
     bucketNames:
       chunks: "loki-chunks"
       ruler: "loki-ruler"
+
   schemaConfig:
     configs:
-      - from: "2024-01-01"
+      - from: "2024-08-20"
         store: tsdb
         object_store: filesystem
         schema: v13
@@ -19,22 +22,36 @@ loki:
           prefix: loki_index_
           period: 24h
 
-  backend:
-    replicas: 0
-  read:
-    replicas: 0
-  write:
-    replicas: 0
-
   singleBinary:
     replicas: 1
     persistence:
       enabled: true
       storageClass: local-path
-      size: 5Gi
+      size: 10Gi
+
+  # 可选：监控和告警配置
+  monitoring:
+    selfMonitoring:
+      enabled: false
+    grafanaAgent:
+      installOperator: false
+
+  # 可选：日志保留配置
+  limits_config:
+    retention_period: 168h  # 7天
 
   promtail:
     enabled: true
+    config:
+      snippets:
+        scrapeConfigs: |
+          - job_name: kubernetes-pods
+            kubernetes_sd_configs:
+              - role: pod
+            relabel_configs:
+              - source_labels: [__meta_kubernetes_pod_annotation_kubernetes_io_config_hash]
+                action: drop
+                regex: .*
 
   grafana:
     enabled: false
