@@ -1,17 +1,17 @@
-grafana:
-  enabled: true
-  service:
-    type: NodePort
-    nodePort: 30004
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    service:
+      type: NodePort
+      nodePort: 30004
+    adminPassword: grafana123
 
-  adminPassword: grafana123
+  prometheus:
+    prometheusSpec:
+      retention: 7d
+      retentionSize: "5GB"
+      storageSpec:
+        emptyDir: {}
 
-prometheus:
-  prometheusSpec:
-    retention: 7d
-    retentionSize: "5GB"
-    storageSpec:
-      emptyDir: {}
-
-alertmanager:
-  enabled: false
+  alertmanager:
+    enabled: false

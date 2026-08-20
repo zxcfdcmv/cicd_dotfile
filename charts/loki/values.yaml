@@ -1,12 +1,11 @@
-deploymentMode: SingleBinary
-
 loki:
+  deploymentMode: SingleBinary
+
   auth_enabled: false
   commonConfig:
     replication_factor: 1
   storage:
     type: filesystem
-
   schemaConfig:
     configs:
       - from: "2024-01-01"
@@ -17,22 +16,22 @@ loki:
           prefix: loki_index_
           period: 24h
 
-backend:
-  replicas: 0
-read:
-  replicas: 0
-write:
-  replicas: 0
+  backend:
+    replicas: 0
+  read:
+    replicas: 0
+  write:
+    replicas: 0
 
-singleBinary:
-  replicas: 1
-  persistence:
+  singleBinary:
+    replicas: 1
+    persistence:
+      enabled: true
+      storageClass: local-path
+      size: 5Gi
+
+  promtail:
     enabled: true
-    storageClass: local-path
-    size: 5Gi
 
-promtail:
-  enabled: true
-
-grafana:
-  enabled: false
+  grafana:
+    enabled: false

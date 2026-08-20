@@ -1,83 +1,79 @@
-server:
-  service:
-    type: NodePort
-    nodePortHttp: 30003
+argo-cd:
+  server:
+    service:
+      type: NodePort
+      nodePortHttp: 30003
 
-  extraArgs:
-    - --insecure
+    extraArgs:
+      - --insecure
 
-  # config:
-  #   url: http://192.168.31.69:30003
+    livenessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 1
 
-  livenessProbe:
+    readinessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: 8080
+        scheme: HTTP
+      initialDelaySeconds: 15
+      periodSeconds: 5
+      timeoutSeconds: 3
+      failureThreshold: 3
+      successThreshold: 1
+
+  dex:
+    enabled: false
+
+  notifications:
+    enabled: false
+
+  repoServer:
+    livenessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: http
+      initialDelaySeconds: 300
+      periodSeconds: 30
+      timeoutSeconds: 10
+      failureThreshold: 5
+      successThreshold: 1
+
+    readinessProbe:
+      enabled: true
+      httpGet:
+        path: /healthz
+        port: http
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+      successThreshold: 1
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 2Gi
+
+  controller:
     enabled: true
-    httpGet:
-      path: /healthz
-      port: 8080   # HTTP 端口
-      scheme: HTTP  # 明确使用 HTTP
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 5
-    successThreshold: 1
-
-  readinessProbe:
-    enabled: true
-    httpGet:
-      path: /healthz
-      port: 8080   # HTTP 端口
-      scheme: HTTP  # 明确使用 HTTP
-    initialDelaySeconds: 15
-    periodSeconds: 5
-    timeoutSeconds: 3
-    failureThreshold: 3
-    successThreshold: 1
-
-dex:
-  enabled: false
-  install: false
-
-notifications:
-  enabled: false
-
-# 关键：覆盖 repo-server 的 probe
-repoServer:
-  livenessProbe:
-    enabled: true
-    httpGet:
-      path: /healthz
-      port: http   # 使用名称
-    initialDelaySeconds: 300
-    periodSeconds: 30
-    timeoutSeconds: 10
-    failureThreshold: 5
-    successThreshold: 1
-
-  readinessProbe:
-    enabled: true
-    httpGet:
-      path: /healthz
-      port: http   # 使用名称
-    initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 5
-    failureThreshold: 3
-    successThreshold: 1
-
-  resources:
-    requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
-      cpu: 500m
-      memory: 2Gi
-
-controller:
-  enabled: true
-  resources:
-    requests:
-      cpu: 100m
-      memory: 256Mi
-    limits:
-      cpu: 500m
-      memory: 512Mi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
