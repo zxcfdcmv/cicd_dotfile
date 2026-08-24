@@ -21,8 +21,20 @@ jenkins:
 
   # 如果在本地Minikube或Kind学习，可以不用Ingress
   ingress:
-    enabled: false
+    enabled: true
 
   # 禁用Agent相关功能（学习阶段暂时用不到）
   agent:
     enabled: false
+
+controller:
+  service:
+    type: ClusterIP
+ingress:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: jenkins.local
+      paths:
+        - path: /
+          pathType: Prefix
