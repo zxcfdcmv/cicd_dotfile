@@ -5,6 +5,10 @@ jenkins:
   controller:
     service:
       type: ClusterIP
+    ingress:
+      enabled: true
+      ingressClassName: "nginx"
+      hostName: "jenkins.local"
     installPlugins: []
 
     resources:
@@ -14,15 +18,6 @@ jenkins:
       limits:
         memory: "512Mi"
         cpu: "500m"
-
-  ingress:
-    enabled: true
-    className: "nginx"
-    hosts:
-      - host: jenkins.local
-        paths:
-          - path: /
-            pathType: Prefix
 
   agent:
     enabled: false
