@@ -1,11 +1,17 @@
 argo-cd:
   server:
-    service:
-      type: NodePort
-      nodePortHttp: 30003
-
     extraArgs:
       - --insecure
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: argocd.local
+      annotations:
+        # 核心：启用 SSL 透传
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        # 可选：强制将 HTTP 重定向到 HTTPS
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
     livenessProbe:
       enabled: true
