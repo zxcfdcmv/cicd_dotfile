@@ -3,7 +3,7 @@ ingress-nginx:
     image:
       registry: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/ingress-nginx
       image: controller
-      tag: v1.9.6
+      tag: v1.15.1
     admissionWebhooks:
       patch:
         image:
