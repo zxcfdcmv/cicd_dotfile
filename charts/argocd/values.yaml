@@ -7,9 +7,6 @@ argo-cd:
       enabled: true
       ingressClassName: nginx
       hostname: argocd.local
-      annotations:
-        # 核心：启用 SSL 透传
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 
     livenessProbe:
       enabled: true
