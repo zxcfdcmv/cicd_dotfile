@@ -2,11 +2,31 @@ kube-prometheus-stack:
   grafana:
     enabled: true
     service:
-      type: NodePort
-      nodePort: 30004
+      type: ClusterIP
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - grafana.local
     adminPassword: grafana123
 
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            url: http://loki:3100
+            access: proxy
+            isDefault: false
+
   prometheus:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hosts:
+        - prometheus.local
+
     prometheusSpec:
       retention: 7d
       retentionSize: "5GB"
