@@ -1,14 +1,14 @@
 ingress-nginx:
-# 核心配置：解决镜像拉取问题
   controller:
-    # image:
-    #   registry: docker.io
-    #   image: k8smirror/ingress-nginx-controller
-    # admissionWebhooks:
-    #   patch:
-    #     image:
-    #       registry: docker.io
-    #       image: k8smirror/ingress-nginx-kube-webhook-certgen
+    image:
+      registry: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/ingress-nginx
+      image: controller
+      tag: v1.9.6
+    admissionWebhooks:
+      patch:
+        image:
+          registry: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/registry.k8s.io/ingress-nginx
+          image: kube-webhook-certgen
+          tag: v1.6.9
     service:
-      # 本地 K3s 环境下，用 NodePort 暴露服务更容易访问
       type: NodePort
