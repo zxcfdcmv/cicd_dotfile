@@ -1,6 +1,5 @@
 loki:
   deploymentMode: SingleBinary
-
   auth_enabled: false
 
   commonConfig:
@@ -8,9 +7,13 @@ loki:
 
   storage:
     type: filesystem
+    filesystem:
+      chunks_directory: /var/loki/chunks
+      rules_directory: /var/loki/rules
     bucketNames:
       chunks: "loki-chunks"
       ruler: "loki-ruler"
+      admin: "loki-admin"
 
   schemaConfig:
     configs:
@@ -29,16 +32,8 @@ loki:
       storageClass: local-path
       size: 10Gi
 
-  # 可选：监控和告警配置
-  monitoring:
-    selfMonitoring:
-      enabled: false
-    grafanaAgent:
-      installOperator: false
-
-  # 可选：日志保留配置
   limits_config:
-    retention_period: 168h  # 7天
+    retention_period: 168h
 
   promtail:
     enabled: true
